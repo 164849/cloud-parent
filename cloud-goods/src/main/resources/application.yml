@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: cloud-goods #服务器名称 必须有 需要到nacos注册
+  cloud:
+    # nacos的配置
+    nacos:
+      server-addr: localhost:8848
+      username: nacos
+      password: nacos
+
+# 端口号
+server:
+  port: ${port:9001}
