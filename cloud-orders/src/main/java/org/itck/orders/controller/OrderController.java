@@ -1,13 +1,17 @@
 package org.itck.orders.controller;
 
 import com.itck.entity.domain.Goods;
+import com.itck.entity.domain.Jifen;
+import org.itck.orders.api.JifenApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("orders")
@@ -15,6 +19,9 @@ public class OrderController {
 
     @Autowired
     RestTemplate template;
+
+    @Resource
+    JifenApi jifenApi;
 
     @GetMapping("save")
     public Object save() {
@@ -31,4 +38,15 @@ public class OrderController {
 
     }
 
+    //
+    @GetMapping("test")
+    public Map saveJifen() {
+        Jifen jifen = new Jifen(1, 10, "注册送大奖");
+        return jifenApi.save(jifen);
+    }
+
+    @GetMapping("test02")
+    public String test02() {
+        return "流量测试接口1";
+    }
 }

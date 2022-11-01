@@ -7,7 +7,21 @@ spring:
       server-addr: localhost:8848
       username: nacos
       password: nacos
+    
+    sentinel:
+      eager: true
+      transport:
+        port: 8719
+        dashboard: localhost:8888
 
 # 端口号
 server:
   port: ${port:8081}
+
+ribbon:
+  eager-load:
+    enabled: true
+    clients:
+      - cloud-jifen
+
+#

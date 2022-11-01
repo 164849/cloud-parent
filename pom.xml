@@ -7,6 +7,7 @@
         <module>cloud-entity</module>
         <module>cloud-goods</module>
         <module>cloud-orders</module>
+        <module>cloud-jifen</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -44,6 +45,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
 
         </dependencies>
     </dependencyManagement>
