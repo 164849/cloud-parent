@@ -38,6 +38,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-spring-webmvc-adapter</artifactId>
+            <version>1.8.4</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.itck</groupId>
             <artifactId>cloud-entity</artifactId>
             <version>1.0-SNAPSHOT</version>

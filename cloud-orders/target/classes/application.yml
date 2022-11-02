@@ -7,7 +7,68 @@ spring:
       server-addr: localhost:8848
       username: nacos
       password: nacos
+    
+    sentinel:
+      eager: true
+      transport:
+        port: 8719
+        dashboard: localhost:8888
+      web-context-unify: false
+    datasource:
+      flow:
+        nacos:
+          server-addr: ${spring.cloud.nacos.server-addr}
+          username: ${spring.cloud.nacos.username}
+          password: ${spring.cloud.nacos.password}
+          groupId: SENTINEL_GROUP
+          dataId: ${spring.application.name}-flow-rules
+          rule-type: flow
+      degrade:
+        nacos:
+          server-addr: ${spring.cloud.nacos.server-addr}
+          username: ${spring.cloud.nacos.username}
+          password: ${spring.cloud.nacos.password}
+          groupId: SENTINEL_GROUP
+          dataId: ${spring.application.name}-degrade-rules
+          rule-type: degrade
+      param-flow:
+        nacos:
+          server-addr: ${spring.cloud.nacos.server-addr}
+          username: ${spring.cloud.nacos.username}
+          password: ${spring.cloud.nacos.password}
+          groupId: SENTINEL_GROUP
+          dataId: ${spring.application.name}-param-rules
+          rule-type: param-flow
+      system:
+        nacos:
+          server-addr: ${spring.cloud.nacos.server-addr}
+          username: ${spring.cloud.nacos.username}
+          password: ${spring.cloud.nacos.password}
+          groupId: SENTINEL_GROUP
+          dataId: ${spring.application.name}-system-rules
+          rule-type: system
+      authority:
+        nacos:
+          server-addr: ${spring.cloud.nacos.server-addr}
+          username: ${spring.cloud.nacos.username}
+          password: ${spring.cloud.nacos.password}
+          groupId: SENTINEL_GROUP
+          dataId: ${spring.application.name}-authority-rules
+          rule-type: authority
 
 # 端口号
 server:
   port: ${port:8081}
+
+
+ribbon:
+  eager-load:
+    enabled: true
+    clients:
+      - cloud-jifen
+
+#
+feign:
+  sentinel:
+    enabled: true
+

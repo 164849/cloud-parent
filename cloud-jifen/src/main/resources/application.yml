@@ -1,0 +1,10 @@
+#spring:
+#  application:
+#    name: cloud-jifen #服务名称，必须，保证唯一
+#  cloud:
+#    nacos:
+#      server-addr: localhost:8848 #指定nacos-server的Nginx地址
+#      username: nacos
+#      password: nacos
+#server:
+#  port: ${port:7071}
