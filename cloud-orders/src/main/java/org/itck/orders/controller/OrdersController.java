@@ -2,9 +2,7 @@ package org.itck.orders.controller;
 
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 
@@ -25,5 +23,12 @@ public class OrdersController {
             throw new IllegalArgumentException("非法参数异常！");
         }
         return "Test002! " + flag;
+    }
+
+    @RequestMapping("test")
+    public String test(@RequestHeader("name") String name, @RequestParam("age") String age) {
+        System.out.println("获取到的请求头中的name=" + name);
+        System.out.println("获取到的请求参数的age=" + age);
+        return "Order Test! name=" + name + ",age=" + age;
     }
 }

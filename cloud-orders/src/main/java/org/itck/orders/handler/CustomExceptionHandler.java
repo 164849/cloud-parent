@@ -45,12 +45,12 @@ public class CustomExceptionHandler {
         }};
     }
 
-    @ExceptionHandler(Exception.class)
-    @ResponseBody
-    public Map exception() {
-        return new HashMap() {{
-            put("code", "5xx");
-            put("msg", "，exception！！");
-        }};
-    }
+//    @ExceptionHandler(Exception.class)
+//    @ResponseBody
+//    public Map exception() {
+//        return new HashMap() {{
+//            put("code", "5xx");
+//            put("msg", "，exception！！");
+//        }};
+//    }
 }

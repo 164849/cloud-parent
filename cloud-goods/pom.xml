@@ -42,6 +42,16 @@
             <artifactId>cloud-entity</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
+        <!--链路追踪场景依赖-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

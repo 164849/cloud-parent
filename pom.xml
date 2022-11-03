@@ -8,6 +8,7 @@
         <module>cloud-goods</module>
         <module>cloud-orders</module>
         <module>cloud-jifen</module>
+        <module>cloud-gateway</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
