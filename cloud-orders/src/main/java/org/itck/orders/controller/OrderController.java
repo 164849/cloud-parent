@@ -3,11 +3,13 @@ package org.itck.orders.controller;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.itck.entity.domain.Goods;
 import com.itck.entity.domain.Jifen;
+import com.itck.entity.domain.R;
+import com.itck.entity.domain.TbOrder;
+import lombok.RequiredArgsConstructor;
 import org.itck.orders.api.JifenApi;
+import org.itck.orders.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
@@ -18,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("orders")
+@RequiredArgsConstructor
 public class OrderController {
 
     @Autowired
@@ -26,7 +29,21 @@ public class OrderController {
     @Resource
     JifenApi jifenApi;
 
+    private final OrderService service;
+
+    @PostMapping("save")
+    public R saveOrder(@RequestBody TbOrder tbOrder) {
+        if (Objects.isNull(tbOrder.getGoodsId())) {
+            throw new IllegalArgumentException("商品id不能为空");
+        }
+        if (tbOrder.getOrderNum() < 0) {
+            throw new IllegalArgumentException("购买数量不能小于0");
+        }
+        return service.saveOrder(tbOrder);
+    }
+
     @GetMapping("save")
+
     public Object save() {
         //1、调用商品服务，查询商品信息
 
