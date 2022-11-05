@@ -59,30 +59,30 @@ public class OrderController {
     }
 
     //
-    @GetMapping("test")
-    public Map saveJifen() {
-        Jifen jifen = new Jifen(1, 10, "注册送大奖");
-        return jifenApi.save(jifen);
-    }
+//    @GetMapping("test")
+//    public Map saveJifen() {
+//        Jifen jifen = new Jifen(1, 10, "注册送大奖");
+//        return jifenApi.save(jifen);
+//    }
 
     @GetMapping("test02")
     public String test02() {
         return "流量测试接口1";
     }
 
-    @GetMapping("test03")
-    public String test03() {
-        Jifen jifen = new Jifen(1, 10, "注册送大奖");
-        jifenApi.save(jifen);
-        return "链路接口限流-3-请求限流";
-    }
+//    @GetMapping("test03")
+//    public String test03() {
+//        Jifen jifen = new Jifen(1, 10, "注册送大奖");
+//        jifenApi.save(jifen);
+//        return "链路接口限流-3-请求限流";
+//    }
 
-    @GetMapping("test04")
-    public String test04() {
-        Jifen jifen = new Jifen(1, 10, "注册送大奖");
-        jifenApi.save(jifen);
-        return "链路接口限流-4-请求不限流";
-    }
+//    @GetMapping("test04")
+//    public String test04() {
+//        Jifen jifen = new Jifen(1, 10, "注册送大奖");
+//        jifenApi.save(jifen);
+//        return "链路接口限流-4-请求不限流";
+//    }
 
     @GetMapping("test05")
     public String test05(String flag) throws InterruptedException {

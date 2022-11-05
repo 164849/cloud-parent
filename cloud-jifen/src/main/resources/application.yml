@@ -1,10 +1,61 @@
-#spring:
-#  application:
-#    name: cloud-jifen #服务名称，必须，保证唯一
-#  cloud:
+#mybatis:
+#  configuration:
+#    map-underscore-to-camel-case: true
+#
+#logging:
+#  level:
+#    org.itck.goods.mapper: debug
+#
+#seata:
+#  enabled: true
+#  enable-auto-data-source-proxy: true
+#  config:
+#    type: nacos
 #    nacos:
-#      server-addr: localhost:8848 #指定nacos-server的Nginx地址
+#      server-addr: 127.0.0.1:8848
+#      group: SEATA_GROUP
+#      username: nacos
+#      password: nacos
+#      data-id: seataServer.properties
+#  registry:
+#    type: nacos
+#    nacos:
+#      application: seata-server
+#      server-addr: 127.0.0.1:8848
+#      group: SEATA_GROUP
+#      username: nacos
+#      password: nacos
+#
+#
+#spring:
+#  datasource:
+#    druid:
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      username: root
+#      password: 1433953151
+#      url: jdbc:mysql://127.0.0.1:3306/cloud2210?useUnicode=true&characterEncoding=utf8&useSSL=false
+#      max-active: 40
+#  zipkin:
+#    base-url: http://localhost:9411
+#    discovery-client-enabled: false
+#  sleuth:
+#    sampler:
+#      rate: 10
+#  application:
+#    name: cloud-jifen # 应用名称，到nacos注册服务时服务的名称默认就是应用名
+#  cloud:
+#    sentinel:
+#      eager: true
+#      transport:
+#        port: 8719
+#        dashboard: localhost:8888
+#      web-context-unify: false
+#    nacos:
+#      server-addr: localhost:8848 # naocs注册中心服务的地址
 #      username: nacos
 #      password: nacos
 #server:
-#  port: ${port:7071}
+#  port: ${port:7072} # 服务提供者端口号
+#
+#url: 6666666777
+#

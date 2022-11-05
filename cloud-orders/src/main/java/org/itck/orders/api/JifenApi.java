@@ -1,5 +1,6 @@
 package org.itck.orders.api;
 
+import com.itck.entity.domain.Integral;
 import com.itck.entity.domain.Jifen;
 import com.itck.entity.domain.R;
 import com.itck.entity.domain.TbGoods;
@@ -16,7 +17,7 @@ import java.util.Map;
 public interface JifenApi {
 
     @PostMapping(value = "/save")
-    Map save(@RequestBody Jifen jifen);
+    R save(@RequestBody Integral integral);
 
 
 }

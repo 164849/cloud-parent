@@ -1,6 +1,10 @@
 package com.itck.jifen.controller;
 
+import com.itck.entity.domain.Integral;
 import com.itck.entity.domain.Jifen;
+import com.itck.entity.domain.R;
+import com.itck.jifen.server.JifenServer;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +17,13 @@ import java.util.Map;
 @RestController
 @RequestMapping("/jifen")
 @RefreshScope
+@RequiredArgsConstructor
 public class JifenController {
 
     @Value("${url}")
     String url;
+
+    private final JifenServer server;
 
     @GetMapping("test01")
     public String test01() {
@@ -24,14 +31,10 @@ public class JifenController {
     }
 
     @PostMapping(value = "/save")
-    public Map save(@RequestBody Jifen jifen) {
+    public R save(@RequestBody Integral integral) {
 
-        System.out.println("调用了积分保存接口");
-        System.out.println(jifen);
-        return new HashMap() {{
-            put("isSuccess", true);
-            put("msg", "save success");
-        }};
+
+        return server.saveJifen(integral);
     }
 
     @PostMapping(value = "/update")
