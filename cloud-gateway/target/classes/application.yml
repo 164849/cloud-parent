@@ -1,0 +1,75 @@
+server:
+  #gateway的端口
+  port: 8040
+
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+    gateway:
+      routes:
+        - id: cloud-orders  #路由的标识 全局唯一
+          uri: lb://cloud-orders  # 目标服务的地址 [lb:使用负载均衡 cloud-orders微服务名字]
+          predicates: # 谓词/断言的配置
+            - Path=/orders/**,/order/** # 路径匹配
+            - After=2022-11-03T10:11:40.626+08:00[Asia/Shanghai]
+            #- Cookie=age,18
+            #- Header=token,123
+            #- Host=127.0.0.1,baidu.com,**.jd.com
+            #- MyHeader=city,zhengzhou
+          filters:
+            - AddRequestHeader=name,666
+            - AddRequestParameter=age,18
+            - CalServiceTime=name,zed
+    sentinel:
+      transport:
+        dashboard: localhost:8888
+      datasource:
+        flow:
+          nacos:
+            server-addr: ${spring.cloud.nacos.server-addr}
+            username: nacos
+            password: nacos
+            groupId: SENTINEL_GROUP
+            dataId: ${spring.application.name}-flow-rules
+            rule-type: flow
+        degrade:
+          nacos:
+            server-addr: ${spring.cloud.nacos.server-addr}
+            username: nacos
+            password: nacos
+            groupId: SENTINEL_GROUP
+            dataId: ${spring.application.name}-degrade-rules
+            rule-type: degrade
+        param-flow:
+          nacos:
+            server-addr: ${spring.cloud.nacos.server-addr}
+            username: nacos
+            password: nacos
+            groupId: SENTINEL_GROUP
+            dataId: ${spring.application.name}-param-rules
+            rule-type: param-flow
+        system:
+          nacos:
+            server-addr: ${spring.cloud.nacos.server-addr}
+            username: nacos
+            password: nacos
+            groupId: SENTINEL_GROUP
+            dataId: ${spring.application.name}-system-rules
+            rule-type: system
+        authority:
+          nacos:
+            server-addr: ${spring.cloud.nacos.server-addr}
+            username: nacos
+            password: nacos
+            groupId: SENTINEL_GROUP
+            dataId: ${spring.application.name}-authority-rules
+            rule-type: authority
+  zipkin:
+    base-url: http://localhost:9411
+    discovery-client-enabled: false
+  sleuth:
+    sampler:
+      rate: 10

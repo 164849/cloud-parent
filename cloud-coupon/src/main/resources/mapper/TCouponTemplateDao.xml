@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itck.coupon.mapper.TCouponTemplateDao">
+    <resultMap id="BaseResultMap" type="com.itck.coupon.entity.TCouponTemplate">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="flag" jdbcType="INTEGER" property="flag"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="logo" jdbcType="VARCHAR" property="logo"/>
+        <result column="intro" jdbcType="VARCHAR" property="intro"/>
+        <result column="category" jdbcType="INTEGER" property="category"/>
+        <result column="scope" jdbcType="INTEGER" property="scope"/>
+        <result column="scope_id" jdbcType="INTEGER" property="scopeId"/>
+        <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime"/>
+        <result column="coupon_count" jdbcType="INTEGER" property="couponCount"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="user_audit" jdbcType="VARCHAR" property="userAudit"/>
+        <result column="template_key" jdbcType="VARCHAR" property="templateKey"/>
+        <result column="target" jdbcType="INTEGER" property="target"/>
+        <result column="target_level" jdbcType="INTEGER" property="targetLevel"/>
+        <result column="send_type" jdbcType="INTEGER" property="sendType"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="limitmoney" jdbcType="DECIMAL" property="limitmoney"/>
+        <result column="discount" jdbcType="DOUBLE" property="discount"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, flag, `name`, logo, intro, category, `scope`, scope_id, expire_time, coupon_count,
+        create_time, user_id, user_audit, template_key, target, target_level, send_type,
+        start_time, end_time, limitmoney, discount
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_coupon_template
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="findAll" resultType="com.itck.coupon.entity.TCouponTemplate">
+        select
+        <include refid="Base_Column_List"/>
+        from t_coupon_template
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from t_coupon_template
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.itck.coupon.entity.TCouponTemplate"
+            useGeneratedKeys="true">
+        insert into t_coupon_template (flag, `name`, logo,
+                                       intro, category, `scope`,
+                                       scope_id, expire_time, coupon_count,
+                                       create_time, user_id, user_audit,
+                                       template_key, target, target_level,
+                                       send_type, start_time, end_time,
+                                       limitmoney, discount)
+        values (#{flag,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{logo,jdbcType=VARCHAR},
+                #{intro,jdbcType=VARCHAR}, #{category,jdbcType=INTEGER}, #{scope,jdbcType=INTEGER},
+                #{scopeId,jdbcType=INTEGER}, #{expireTime,jdbcType=TIMESTAMP}, #{couponCount,jdbcType=INTEGER},
+                #{createTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}, #{userAudit,jdbcType=VARCHAR},
+                #{templateKey,jdbcType=VARCHAR}, #{target,jdbcType=INTEGER}, #{targetLevel,jdbcType=INTEGER},
+                #{sendType,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP},
+                #{limitmoney,jdbcType=DECIMAL}, #{discount,jdbcType=DOUBLE})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.itck.coupon.entity.TCouponTemplate"
+            useGeneratedKeys="true">
+        insert into t_coupon_template
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="flag != null">
+                flag,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="logo != null">
+                logo,
+            </if>
+            <if test="intro != null">
+                intro,
+            </if>
+            <if test="category != null">
+                category,
+            </if>
+            <if test="scope != null">
+                `scope`,
+            </if>
+            <if test="scopeId != null">
+                scope_id,
+            </if>
+            <if test="expireTime != null">
+                expire_time,
+            </if>
+            <if test="couponCount != null">
+                coupon_count,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userAudit != null">
+                user_audit,
+            </if>
+            <if test="templateKey != null">
+                template_key,
+            </if>
+            <if test="target != null">
+                target,
+            </if>
+            <if test="targetLevel != null">
+                target_level,
+            </if>
+            <if test="sendType != null">
+                send_type,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="limitmoney != null">
+                limitmoney,
+            </if>
+            <if test="discount != null">
+                discount,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="flag != null">
+                #{flag,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="logo != null">
+                #{logo,jdbcType=VARCHAR},
+            </if>
+            <if test="intro != null">
+                #{intro,jdbcType=VARCHAR},
+            </if>
+            <if test="category != null">
+                #{category,jdbcType=INTEGER},
+            </if>
+            <if test="scope != null">
+                #{scope,jdbcType=INTEGER},
+            </if>
+            <if test="scopeId != null">
+                #{scopeId,jdbcType=INTEGER},
+            </if>
+            <if test="expireTime != null">
+                #{expireTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="couponCount != null">
+                #{couponCount,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userAudit != null">
+                #{userAudit,jdbcType=VARCHAR},
+            </if>
+            <if test="templateKey != null">
+                #{templateKey,jdbcType=VARCHAR},
+            </if>
+            <if test="target != null">
+                #{target,jdbcType=INTEGER},
+            </if>
+            <if test="targetLevel != null">
+                #{targetLevel,jdbcType=INTEGER},
+            </if>
+            <if test="sendType != null">
+                #{sendType,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="limitmoney != null">
+                #{limitmoney,jdbcType=DECIMAL},
+            </if>
+            <if test="discount != null">
+                #{discount,jdbcType=DOUBLE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.itck.coupon.entity.TCouponTemplate">
+        update t_coupon_template
+        <set>
+            <if test="flag != null">
+                flag = #{flag,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="logo != null">
+                logo = #{logo,jdbcType=VARCHAR},
+            </if>
+            <if test="intro != null">
+                intro = #{intro,jdbcType=VARCHAR},
+            </if>
+            <if test="category != null">
+                category = #{category,jdbcType=INTEGER},
+            </if>
+            <if test="scope != null">
+                `scope` = #{scope,jdbcType=INTEGER},
+            </if>
+            <if test="scopeId != null">
+                scope_id = #{scopeId,jdbcType=INTEGER},
+            </if>
+            <if test="expireTime != null">
+                expire_time = #{expireTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="couponCount != null">
+                coupon_count = #{couponCount,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userAudit != null">
+                user_audit = #{userAudit,jdbcType=VARCHAR},
+            </if>
+            <if test="templateKey != null">
+                template_key = #{templateKey,jdbcType=VARCHAR},
+            </if>
+            <if test="target != null">
+                target = #{target,jdbcType=INTEGER},
+            </if>
+            <if test="targetLevel != null">
+                target_level = #{targetLevel,jdbcType=INTEGER},
+            </if>
+            <if test="sendType != null">
+                send_type = #{sendType,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="limitmoney != null">
+                limitmoney = #{limitmoney,jdbcType=DECIMAL},
+            </if>
+            <if test="discount != null">
+                discount = #{discount,jdbcType=DOUBLE},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.itck.coupon.entity.TCouponTemplate">
+        update t_coupon_template
+        set flag         = #{flag,jdbcType=INTEGER},
+            `name`       = #{name,jdbcType=VARCHAR},
+            logo         = #{logo,jdbcType=VARCHAR},
+            intro        = #{intro,jdbcType=VARCHAR},
+            category     = #{category,jdbcType=INTEGER},
+            `scope`      = #{scope,jdbcType=INTEGER},
+            scope_id     = #{scopeId,jdbcType=INTEGER},
+            expire_time  = #{expireTime,jdbcType=TIMESTAMP},
+            coupon_count = #{couponCount,jdbcType=INTEGER},
+            create_time  = #{createTime,jdbcType=TIMESTAMP},
+            user_id      = #{userId,jdbcType=INTEGER},
+            user_audit   = #{userAudit,jdbcType=VARCHAR},
+            template_key = #{templateKey,jdbcType=VARCHAR},
+            target       = #{target,jdbcType=INTEGER},
+            target_level = #{targetLevel,jdbcType=INTEGER},
+            send_type    = #{sendType,jdbcType=INTEGER},
+            start_time   = #{startTime,jdbcType=TIMESTAMP},
+            end_time     = #{endTime,jdbcType=TIMESTAMP},
+            limitmoney   = #{limitmoney,jdbcType=DECIMAL},
+            discount     = #{discount,jdbcType=DOUBLE}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

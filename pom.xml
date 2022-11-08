@@ -9,6 +9,9 @@
         <module>cloud-orders</module>
         <module>cloud-jifen</module>
         <module>cloud-gateway</module>
+        <module>cloud-redis</module>
+        <module>cloud-coupon</module>
+        <module>cloud-common</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
