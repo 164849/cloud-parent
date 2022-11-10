@@ -2,18 +2,23 @@ package com.itck.coupon.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.itck.common.utils.RedissonUtils;
 import com.itck.common.utils.SnowFlowUtil;
 import com.itck.coupon.bo.MqMsgBo;
 import com.itck.coupon.config.CouponAudit;
 import com.itck.coupon.config.RabbitMQConstConfig;
+import com.itck.coupon.config.RedisKeyConfig;
 import com.itck.coupon.config.SystemConfig;
 import com.itck.coupon.dto.CouponAuditDto;
 import com.itck.coupon.entity.TCouponTemplate;
+import com.itck.coupon.entity.TUsercoupon;
 import com.itck.coupon.mapper.TCouponTemplateDao;
+import com.itck.coupon.mapper.TUsercouponDao;
 import com.itck.coupon.service.CouponService;
 import com.itck.entity.domain.R;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RLock;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +26,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
@@ -29,6 +35,8 @@ public class CouponServiceImpl implements CouponService {
     private final TCouponTemplateDao couponTemplateDao;
 
     private final RabbitTemplate rabbitTemplate;
+
+    private final TUsercouponDao userCouponDao;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -89,5 +97,65 @@ public class CouponServiceImpl implements CouponService {
             }
         }
         return R.fail("亲，非法请求");
+    }
+
+    @Override
+    @Transactional
+    public R receive(Integer uid, Integer rl, Integer ctid) {
+
+        boolean r = true;
+        boolean isFirstTime = false;
+        if (RedissonUtils.checkKey(RedisKeyConfig.COUPON_CACHE + ctid)) {
+            if (RedissonUtils.checkKey(RedisKeyConfig.COUPON_USERS + ctid)) {
+
+                if (RedissonUtils.exists(RedisKeyConfig.COUPON_USERS + ctid, uid + "")) {
+                    r = false; // 说明用户领取过
+                }
+
+            } else {
+                isFirstTime = true;// 有用户第一次来领取这个优惠券
+            }
+            if (r) {
+                RLock lock = RedissonUtils.getLock(RedisKeyConfig.COUPON_LOCK + ctid);
+                try {
+                    if (lock.tryLock(10, TimeUnit.SECONDS)) {
+                        int count = (int) RedissonUtils.getList(RedisKeyConfig.COUPON_CACHE + ctid, 0);
+                        int level = (int) RedissonUtils.getList(RedisKeyConfig.COUPON_CACHE + ctid, 1);
+                        if (count > 0) {
+                            if (rl < level) {
+                                return R.fail("抱歉，您的级别不够！");
+                            } else {
+                                if (userCouponDao.insert(new TUsercoupon(ctid, uid, "user_" + SnowFlowUtil.getInstance().nextId())) > 0) {
+                                    // 更新缓存
+                                    RedissonUtils.setList(RedisKeyConfig.COUPON_CACHE + ctid, 0, count - 1);
+                                    RedissonUtils.setSet(RedisKeyConfig.COUPON_USERS + ctid, uid + "");
+                                    // 如果是用户第一次领取某个模板的优惠券设置key的过期时间
+                                    if (isFirstTime) {
+                                        long ttl = RedissonUtils.ttl(RedisKeyConfig.COUPON_CACHE + ctid);
+                                        RedissonUtils.expire(RedisKeyConfig.COUPON_USERS + ctid, ttl / 1000);
+                                    }
+                                    return R.ok();
+                                }
+
+                            }
+                        } else {
+                            return R.fail("亲，优惠券没有，下次早点来哟~");
+                        }
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    return R.fail("系统出现异常");
+
+                } finally {
+                    lock.unlock();
+                }
+            } else {
+                return R.fail("已经领过了，亲");
+            }
+        } else {
+            return R.fail("亲，活动已结束！");
+        }
+        return R.fail("系统故障！");
+
     }
 }

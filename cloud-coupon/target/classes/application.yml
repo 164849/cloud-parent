@@ -1,4 +1,7 @@
 spring:
+  redis:
+    host: 192.168.100.110
+    port: 6379
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -91,6 +94,7 @@ mybatis:
 logging:
   level:
     com.itck.coupon.mapper: debug
+
 
 
 seata:

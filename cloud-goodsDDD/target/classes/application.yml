@@ -1,0 +1,123 @@
+spring:
+  application:
+    name: cloud-goodsddd # 应用名称，到nacos注册服务时服务的名称默认就是应用名
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848 # naocs注册中心服务的地址
+        username: nacos
+        password: nacos
+    # sentinel配置
+    sentinel:
+      # 饥饿加载模式
+      eager: true
+      transport:
+        # sentinel客户端与服务端通信的端口
+        port: 8719
+        # sentinel控制台的地址
+        dashboard: localhost:8888
+      web-context-unify: false
+      # nacos数据源
+      datasource:
+        flow:
+          nacos:
+            server-addr: ${spring.cloud.nacos.discovery.server-addr}
+            username: ${spring.cloud.nacos.discovery.username}
+            password: ${spring.cloud.nacos.discovery.password}
+            groupId: SENTINEL_GROUP
+            dataId: ${spring.application.name}-flow-rules
+            rule-type: flow
+        degrade:
+          nacos:
+            server-addr: ${spring.cloud.nacos.discovery.server-addr}
+            username: ${spring.cloud.nacos.discovery.username}
+            password: ${spring.cloud.nacos.discovery.password}
+            groupId: SENTINEL_GROUP
+            dataId: ${spring.application.name}-degrade-rules
+            rule-type: degrade
+        param-flow:
+          nacos:
+            server-addr: ${spring.cloud.nacos.discovery.server-addr}
+            username: ${spring.cloud.nacos.discovery.username}
+            password: ${spring.cloud.nacos.discovery.password}
+            groupId: SENTINEL_GROUP
+            dataId: ${spring.application.name}-param-rules
+            rule-type: param-flow
+        system:
+          nacos:
+            server-addr: ${spring.cloud.nacos.discovery.server-addr}
+            username: ${spring.cloud.nacos.discovery.username}
+            password: ${spring.cloud.nacos.discovery.password}
+            groupId: SENTINEL_GROUP
+            dataId: ${spring.application.name}-system-rules
+            rule-type: system
+        authority:
+          nacos:
+            server-addr: ${spring.cloud.nacos.discovery.server-addr}
+            username: ${spring.cloud.nacos.discovery.username}
+            password: ${spring.cloud.nacos.discovery.password}
+            groupId: SENTINEL_GROUP
+            dataId: ${spring.application.name}-authority-rules
+            rule-type: authority
+
+  zipkin:
+    base-url: http://localhost:9411/
+    discovery-client-enabled: false
+  sleuth:
+    sampler:
+      # 采样率，每秒钟到zikpin发送10个请求
+      rate: 10
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: root
+      password: 1433953151
+      url: jdbc:mysql://127.0.0.1:3306/cloud2210?useUnicode=true&characterEncoding=utf8&useSSL=false
+      #连接池配置
+      max-active: 40
+      web-stat-filter:
+        enabled: true
+        url-pattern: "/*"
+        exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
+      stat-view-servlet:
+        url-pattern: "/druid/*"
+        reset-enable: false
+        login-username: admin
+        login-password: zzjava
+        enabled: true
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: update
+    show-sql: true # 是否显示自动执行的SQL
+server:
+  port: 9010 # 服务消费者端口号
+feign:
+  sentinel:
+    enabled: true
+
+# logger日志
+logging:
+  level:
+    com.itck.goodsddd.infra.repo: debug
+
+seata:
+  enabled: true
+  enable-auto-data-source-proxy: true
+  config:
+    type: nacos
+    nacos:
+      server-addr: localhost:8848
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos
+      data-id: seataServer.properties
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: localhost:8848
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos

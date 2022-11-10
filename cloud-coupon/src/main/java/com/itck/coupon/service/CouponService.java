@@ -16,5 +16,6 @@ public interface CouponService {
     // 审核优惠券活动
     R audit(CouponAuditDto dto);
 
+    R receive(Integer uid, Integer ul, Integer ctid);
 
 }

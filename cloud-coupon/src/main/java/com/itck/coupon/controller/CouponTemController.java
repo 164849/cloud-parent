@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("coupon")
 public class CouponTemController {
 
     private final CouponService couponService;
@@ -33,4 +34,6 @@ public class CouponTemController {
     public R audit(@RequestBody CouponAuditDto dto) {
         return couponService.audit(dto);
     }
+
+    
 }

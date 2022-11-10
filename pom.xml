@@ -12,6 +12,7 @@
         <module>cloud-redis</module>
         <module>cloud-coupon</module>
         <module>cloud-common</module>
+        <module>cloud-goodsDDD</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

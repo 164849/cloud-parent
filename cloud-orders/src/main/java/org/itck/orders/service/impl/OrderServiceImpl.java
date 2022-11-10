@@ -1,24 +1,21 @@
 package org.itck.orders.service.impl;
 
+import com.itck.common.utils.RedissonUtils;
 import com.itck.entity.domain.Integral;
 import com.itck.entity.domain.R;
 import com.itck.entity.domain.TbGoods;
 import com.itck.entity.domain.TbOrder;
-import io.seata.spring.annotation.GlobalLock;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.itck.orders.api.GoodsApi;
 import org.itck.orders.api.JifenApi;
-import org.itck.orders.mapper.OrderMapper;
+import org.itck.orders.mapper.OrdersMapper;
 import org.itck.orders.service.OrderService;
-import org.itck.orders.util.RedissonUtils;
+
 import org.redisson.api.RLock;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -28,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
-    private final OrderMapper mapper;
+    private final OrdersMapper mapper;
 
     private final GoodsApi goodsApi;
 

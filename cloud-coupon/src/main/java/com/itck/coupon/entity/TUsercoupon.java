@@ -1,10 +1,10 @@
 package com.itck.coupon.entity;
 
-import com.itck.coupon.config.SystemConfig;
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.Date;
+
+import com.itck.coupon.config.SystemConfig;
+import lombok.Data;
 
 /**
  * 9.用户优惠券表(TUsercoupon)实体类

@@ -1,4 +1,4 @@
-package org.itck.orders.util;
+package com.itck.common.utils;
 
 import org.redisson.Redisson;
 import org.redisson.api.RLock;
@@ -49,7 +49,7 @@ public class RedissonUtils {
     }
 
     public static void setList(String key, int index, Object val) {
-        client.getList(key).add(index, val);
+        client.getList(key).set(index, val);
     }
 
     public static void setList(String key, List<Object> vals) {
