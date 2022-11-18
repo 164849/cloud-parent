@@ -1,0 +1,112 @@
+spring:
+  application:
+    name: cloud-skill
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+      username: nacos
+      password: nacos
+    # sentinel
+    sentinel:
+      eager: true
+      transport:
+        dashboard: localhost:8888 #sentinel控制台地址
+        port: 8719 # sentinel客户端端口
+      web-context-unify: false #启动URL收敛，实现链路限流
+      # sentinal-nacos-datasource 数据源的配置
+      datasource:
+        flow:
+          nacos:
+            server-addr: ${spring.cloud.nacos.server-addr}
+            username: ${spring.cloud.nacos.username}
+            password: ${spring.cloud.nacos.password}
+            groupId: SENTINEL_GROUP
+            dataId: ${spring.application.name}-flow-rules
+            rule-type: flow
+        degrade:
+          nacos:
+            server-addr: ${spring.cloud.nacos.server-addr}
+            username: ${spring.cloud.nacos.username}
+            password: ${spring.cloud.nacos.password}
+            groupId: SENTINEL_GROUP
+            dataId: ${spring.application.name}-degrade-rules
+            rule-type: degrade
+        param-flow:
+          nacos:
+            server-addr: ${spring.cloud.nacos.server-addr}
+            username: ${spring.cloud.nacos.username}
+            password: ${spring.cloud.nacos.password}
+            groupId: SENTINEL_GROUP
+            dataId: ${spring.application.name}-param-rules
+            rule-type: param-flow
+        system:
+          nacos:
+            server-addr: ${spring.cloud.nacos.server-addr}
+            username: ${spring.cloud.nacos.username}
+            password: ${spring.cloud.nacos.password}
+            groupId: SENTINEL_GROUP
+            dataId: ${spring.application.name}-system-rules
+            rule-type: system
+        authority:
+          nacos:
+            server-addr: ${spring.cloud.nacos.server-addr}
+            username: ${spring.cloud.nacos.username}
+            password: ${spring.cloud.nacos.password}
+            groupId: SENTINEL_GROUP
+            dataId: ${spring.application.name}-authority-rules
+            rule-type: authority
+  zipkin:
+    base-url: http://localhost:9411
+    discovery-client-enabled: false
+  sleuth:
+    sampler:
+      # 限速器，每秒采集10个请求，防止大并发过载。推荐
+      rate: 10
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/cloud2210?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: root
+      password: 1433953151
+      max-active: 40 #连接池配置
+  rabbitmq:
+    addresses: 192.168.100.110:5672
+
+#端口
+server:
+  port: ${port:5001}
+
+feign:
+  sentinel:
+    enabled: true
+
+mybatis:
+  configuration:
+    # 下划线转驼峰命名法
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mapper/*.xml
+logging:
+  level:
+    # 显示Mapper层的DEBUG日志
+    com.itck.skill.dao: debug
+
+#seata配置
+seata:
+  enabled: true
+  enable-auto-data-source-proxy: true
+  config:
+    type: nacos
+    nacos:
+      server-addr: 127.0.0.1:8848
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos
+      data-id: seataServer.properties
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 127.0.0.1:8848
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.itck.orders.mapper.OrderMapper">
+
+    <insert id="save" parameterType="org.itck.orders.entity.TOrder" useGeneratedKeys="true" keyProperty="id">
+        insert into t_order(uid, uaid, total_money, pay_money, free_money, pay_type, flag, create_time, update_time,
+                            `no`)
+        values (#{uid}, #{uaid}, #{totalMoney}, #{payMoney}, #{freeMoney}, #{payType}, #{flag}, #{createTime},
+                #{updateTime}, #{no})
+
+    </insert>
+</mapper>

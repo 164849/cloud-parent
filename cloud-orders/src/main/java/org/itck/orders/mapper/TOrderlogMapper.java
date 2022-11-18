@@ -1,5 +1,6 @@
 package org.itck.orders.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.itck.orders.entity.TOrderlog;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @author makejava
  * @since 2022-11-10 15:03:18
  */
+@Mapper
 public interface TOrderlogMapper {
 
     /**
@@ -22,7 +24,7 @@ public interface TOrderlogMapper {
      * @return 实例对象
      */
     TOrderlog queryById(Integer id);
-    
+
 
     /**
      * 新增数据

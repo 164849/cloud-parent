@@ -13,6 +13,8 @@
         <module>cloud-coupon</module>
         <module>cloud-common</module>
         <module>cloud-goodsDDD</module>
+        <module>cloud-skill</module>
+        <module>cloud-shenhe</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
